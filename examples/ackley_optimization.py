@@ -10,7 +10,7 @@ from run_tracker import RunTracker
 
 # Problem dimension
 dimension = 1
-interval = 10
+interval = 100
 pop_size = 10
 generations = 500
 csv_path = '/home/mohit/projects/optimization_playground/runs/ackley_optimization_log.csv'
