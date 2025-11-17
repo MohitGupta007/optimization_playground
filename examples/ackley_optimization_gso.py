@@ -5,26 +5,29 @@ sys.path.insert(0, '..')
 from visualization_utils import visualize_optimization
 from problems.ackley_problem import AckleyProblem
 from problems.rosenbrock_problem import RosenbrockProblem
+from problems.griewank_problem import GriewankProblem
 import numpy as np
 from run_tracker import RunTracker
+from optimization_algorithms.glowworm_swarm_optimization_pagmo import GSO as gso
 
 # Problem dimension
 dimension = 2
 interval = 100
 pop_size = 100
-generations = 500
+generations = 200
 csv_path = '/home/mohit/projects/optimization_playground/runs/ackley_optimization_log.csv'
 
-# Create a custom Ackley problem instance
+# Create a custom problem instance
 run_tracker = RunTracker(csv_path=csv_path, pop_size=pop_size, generations=generations)
 problem = AckleyProblem(dimension, tracker=run_tracker)
 # problem = RosenbrockProblem(dimension, tracker=run_tracker)
+# problem = GriewankProblem(dimension, tracker=run_tracker)
 pagmo_problem = pg.problem(problem)
 
 # Choose an algorithm to solve the problem
 # algo = pg.algorithm(pg.pso(gen=generations))
 # algo = pg.algorithm(pg.nlopt('sbplx'))
-algo = pg.algorithm(pg.bee_colony(gen=generations))
+algo = pg.algorithm(gso(generations=generations))
 
 run_tracker.set_algo_name(algo.get_name())
 run_tracker.set_problem_name(pagmo_problem.get_name())
